@@ -1,0 +1,33 @@
+<div class="card" *ngIf="weather$ | async as weather">
+  <div class="card-body">
+    <div>
+      <div class="well flex">
+        <div class="row">
+          <div class="col align-self-start">
+            <div>
+              <h3>{{ weather.city.name }}  {{ zipCode }}</h3>
+              <h5>Current conditions: {{ weather.list[0].weather[0].main }}</h5>
+              <h5>Temperatures today:</h5>
+              <p>
+                Current {{ weather.list[0].temp.day }} - Max
+                {{ weather.list[0].temp.max }} - Min
+                {{ weather.list[0].temp.min }}
+              </p>
+              <button 
+                  routerLink="/forecast/{{ zipCode }}" 
+                  class="btn btn-info"
+                  >Show 5-day forecast for {{ weather.city.name }}
+              </button>
+            </div>
+          </div>
+          <div class="col align-self-end">
+            <div>
+              <button class="close" (click)="deletePlace()">×</button>
+              <img [src]="showIcon(weather.list[0].weather[0].main)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
