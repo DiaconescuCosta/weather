@@ -45,10 +45,5 @@ export class WeatherService {
     }
 
 
-    getZipCode(zip: string) {
-        this.retrievedDataFromStorage = localStorage.getItem('zipCodes');
-        this.displayZipes = this.retrievedDataFromStorage !== null ? JSON.parse(this.retrievedDataFromStorage) : []
-    }
-
 
 }

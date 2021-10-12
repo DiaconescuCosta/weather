@@ -3,6 +3,7 @@ import {IWeather} from '../weather.interface';
 import {Observable, throwError} from 'rxjs';
 import {WeatherService} from '../weather.service';
 import {catchError} from "rxjs/operators";
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class WeatherTabComponent implements OnInit {
 
     constructor(
         private service: WeatherService,
+        private toastr: ToastrService
     ) {
     }
 
@@ -29,7 +31,10 @@ export class WeatherTabComponent implements OnInit {
                 //catching the error, if the zipcode is not found, i will emit the same event emitted when i click on the 'X'
                 this.deletePlace()
 
+                // Display error toastr 
+                this.showToastr();
                 return throwError(httpError)
+                
             })
         );
     }
@@ -40,6 +45,14 @@ export class WeatherTabComponent implements OnInit {
 
     deletePlace() {
         this.delete.emit(this.zipCode)
+    }
+
+    showToastr() {
+        this.toastr.warning('Zip Code not found','Error', {
+            timeOut: 3000,
+            tapToDismiss: true,
+            positionClass: 'toast-top-right'
+        });
     }
 
 }

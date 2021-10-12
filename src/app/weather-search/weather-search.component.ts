@@ -5,7 +5,8 @@ import {
 import {Observable} from 'rxjs';
 import {WeatherService} from '../weather.service';
 import {IWeather} from '../weather.interface';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-weather-search',
@@ -16,13 +17,16 @@ export class WeatherSearchComponent implements OnInit {
     zipCodes: string[] = [];
     weathers: IWeather[] = [];
     form: FormGroup;
+    
+
 
     constructor(
         private service: WeatherService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private toastr: ToastrService
     ) {
         this.form = this.fb.group({
-            input: ['', [Validators.required]],
+            input: ['', [Validators.required, Validators.maxLength(5), Validators.minLength(5)]],
         });
     }
 
@@ -36,20 +40,27 @@ export class WeatherSearchComponent implements OnInit {
 
         //updating the zipcodes list in localStorage
         localStorage.setItem('zipCodes', JSON.stringify(this.zipCodes));
+       
     }
 
     onSubmit() {
-        if(this.form.invalid){
+        if (this.form.invalid) {
             return
         }
-
+        
         // removing double zipCodes
         this.zipCodes.push(this.form.get('input')?.value);
         this.zipCodes = [...new Set(this.zipCodes)]
 
         localStorage.setItem('zipCodes', JSON.stringify(this.zipCodes));
+        
 
         // clean input field
         this.form.get('input')?.setValue("")
+
+        
+        
     }
+
+   
 }

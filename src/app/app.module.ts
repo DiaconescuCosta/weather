@@ -10,6 +10,8 @@ import { WeatherSearchComponent } from './weather-search/weather-search.componen
 import { WeatherForecastComponent } from './weather-forecast/weather-forecast.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -18,7 +20,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule, 
     HttpClientModule,
     NgbModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true
+    }),
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,
